@@ -3,8 +3,6 @@
   hosts: docker
   remote_user: root
   gather_facts: no
-  vars:
-   state: present
 
   tasks:
    - name: "Pull docker image"
