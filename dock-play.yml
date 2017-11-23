@@ -1,0 +1,14 @@
+---
+- name: "Play Docker Images"
+  hosts: docker
+  remote_user: root
+  gather_facts: no
+  vars:
+   state: present
+
+  tasks:
+   - name: "Pull docker image"
+     shell: "docker pull tutum/apache-php"
+   - name: "Start docker image"
+     shell: "docker run -d -p 80:80 tutum/apache-php"
+...
