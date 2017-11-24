@@ -1,0 +1,20 @@
+---
+- name: install serveur web
+  hosts: webservers
+  remote_user: root
+  vars:
+   user: toto
+   domains:
+    - domain: site1.org
+      php: yes
+    - domain: site2.org
+      php: no
+      repo: https://github.com/Grafikart/grafikart.github.io.git
+  tasks:
+  roles:
+   - tools
+   - user
+   - nginx
+#  - name: utilisation de clef
+#  #    authorized_key: user=toto key={{ lookup('file', '/home/toto/.ssh/id_rsa.pub') }}
+...

@@ -1,0 +1,6 @@
+---
+- name: creation user
+  user: name={{ user }} comment="master" shell=/bin/bash
+- name: ajout règles sudo pour user
+  template: src=templates/sudoers.j2 dest=/etc/sudoers.d/{{ user }} validate='visudo -cf %s'
+...

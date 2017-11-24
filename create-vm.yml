@@ -1,0 +1,8 @@
+---
+- name: "TP Create Windows VM"
+  hosts: "10.0.0.15"
+  gather_facts: "false"
+  tasks:
+   - name: "Start Windows Script"
+     script: "files/script2.ps1"
+...

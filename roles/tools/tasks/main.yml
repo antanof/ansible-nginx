@@ -1,0 +1,11 @@
+---
+- name : installation de git, htop, zfs et nginx
+  apt: name={{ item }} update_cache=yes state=latest
+  with_items:
+   - git
+   - htop
+   - zsh
+   - sudo
+#- name: suppression du fichier default de nginx
+#  file: path=/etc/nginx/test state=absent  
+...

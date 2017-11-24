@@ -1,0 +1,8 @@
+---
+- name: nginx started
+  service: name=nginx state=started
+- name: nginx reloaded
+  service: name=nginx state=reloaded
+- name: php restart
+  service: name=php7.0-fpm state=restarted
+...

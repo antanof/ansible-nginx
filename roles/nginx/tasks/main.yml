@@ -1,0 +1,13 @@
+---
+- name: Installation de NGINX
+  apt: name=nginx update_cache=yes state=latest
+  notify: nginx started
+- name: Suppression du fichier de conf NGINX
+  become: yes
+  file: path='/etc/nginx/sites-enabled/default' state=absent
+- name: configuration PHP
+  include: php.yml
+- name: Configuration des sites
+  include: sites.yml
+  with_items: "{{ domains }}"
+...
