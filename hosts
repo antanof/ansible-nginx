@@ -27,11 +27,6 @@
 dc1.it.org
 hyp3.it.org
 
-#[windows:vars]
-#ansible_ssh_user = administrator@IT.ORG
-#ansible_connection = winrm
-#ansible_ssh_port = 5986
-
 # If you have multiple hosts following a pattern you can specify
 # them like this:
 
