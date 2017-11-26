@@ -3,6 +3,10 @@
   tasks:
    - name: Make sure we can connect
      ping:
+   - name: Install required tools
+     apt: name={{item}} state=installed
+     with_items:
+      - unzip
 # PHP
    - name: Add the ondel PHP PPA
      apt_repository: repo='ppa:ondrej/php'
@@ -61,4 +65,12 @@
      register: wp_checksum
    - name: Download Wordpress
      get_url: url=https://wordpress.org/latest.zip dest=/tmp/wordpress.zip checksum="sha1:{{wp_checksum.content}}" 
+#   - name: Install required tools
+#     apt: name=unzip state=installed
+   - name: Unzip Wordpress
+     unarchive: src=/tmp/wordpress.zip dest=/tmp copy=no creates=/tmp/wordpress/wp-settings.php
+   - name: Create project folder
+     file: dest=/var/www/site1.org state=directory
+   - name: Copy Wordpress files
+     command: cp -a /tmp/wordpress/. /var/www/site1.org creates=/var/www/site1.org/wp-settings.php
 ...
