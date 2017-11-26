@@ -3,7 +3,7 @@
   tasks:
    - name: Make sure we can connect
      ping:
-# PHP
+# Installation PHP
    - name: Add the ondel PHP PPA
      apt_repository: repo='ppa:ondrej/php'
    - name: Update the apt cache
@@ -17,7 +17,7 @@
       - php-xml
    - name: Remove Apache2
      apt: name=apache2 state=removed
-# MySQL
+# Installation MySQL
    - name: Install MySQL
      apt: name={{ item }} state=installed
      with_items:
@@ -47,4 +47,5 @@
    - name: Create my.cnf
      template: src=templates/mysql/mycnf.j2 dest=/root/.my.cnf
      when: mysql_new_root_pass.changed
+# Installation Nginx
 ...
