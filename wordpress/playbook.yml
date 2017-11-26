@@ -2,9 +2,13 @@
 - hosts: ubuntu
   become: yes
   roles:
+<<<<<<< HEAD
    - role: ant.wordpress
      database_name: wordpress
      database_user: wordpress
      database_password: WPP4ssw0rd
      wp_domain: site1.org
+=======
+   - ant.wordpress
+>>>>>>> 00d9585ca5ae7a2526fcf2ac7350e23736779e16
 ...
