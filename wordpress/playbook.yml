@@ -73,4 +73,10 @@
      file: dest=/var/www/site1.org state=directory
    - name: Copy Wordpress files
      command: cp -a /tmp/wordpress/. /var/www/site1.org creates=/var/www/site1.org/wp-settings.php
+   - name: Create Wordpress database
+     mysql_db: name=wordpress state=present
+   - name: Create Wordpress database user
+     mysql_user: name=wordpress host=localhost password=P4ssw0rd priv=wordpress.*:ALL
+   - name: Create wp-config
+     template: src=templates/wordpress/wp-config.j2 dest=/var/www/site1.org/wp-config.php
 ...
