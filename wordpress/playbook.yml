@@ -79,4 +79,15 @@
      mysql_user: name=wordpress host=localhost password=P4ssw0rd priv=wordpress.*:ALL
    - name: Create wp-config
      template: src=templates/wordpress/wp-config.j2 dest=/var/www/site1.org/wp-config.php
+   - name: Does the database exist ?
+     command: mysql -u root wordpress -e "SELECT ID FROM wordpress.wp_users LIMIT 1;"
+     register: db_exist
+     ignore_errors: true
+     changed_when: false
+   - name: Copy Wordpress database
+     copy: src=files/wp-database.sql dest=/tmp/wp-database.sql
+     when: db_exist.rc > 0
+   - name: Import Wordpress database
+     mysql_db: target=/tmp/wp-database.sql state=import name=wordpress
+     when: db_exist.rc > 0
 ...
