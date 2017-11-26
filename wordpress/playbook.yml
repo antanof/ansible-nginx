@@ -1,0 +1,50 @@
+- hosts: ubuntu
+  become: yes
+  tasks:
+   - name: Make sure we can connect
+     ping:
+# PHP
+   - name: Add the ondel PHP PPA
+     apt_repository: repo='ppa:ondrej/php'
+   - name: Update the apt cache
+     apt: update_cache=yes cache_valid_time=3600
+   - name: Install PHP
+     apt: name={{ item }} state=installed
+     with_items:
+      - php
+      - php-fpm
+      - php-mysql
+      - php-xml
+   - name: Remove Apache2
+     apt: name=apache2 state=removed
+# MySQL
+   - name: Install MySQL
+     apt: name={{ item }} state=installed
+     with_items:
+      - mysql-server
+      - python-mysqldb
+   - name: Generate new root password
+     command: openssl rand -hex 7 creates=/root/.my.cnf
+     register: mysql_new_root_pass
+   - name: Remove anonymous users
+     mysql_user: name="" state=absent
+     when: mysql_new_root_pass.changed
+   - name: Remove test database
+     mysql_db: name=test state=absent
+     when: mysql_new_root_pass.changed
+   - name: Output new root password
+     debug: 
+      msg: "New root password is {{mysql_new_root_pass.stdout}}"
+     when: mysql_new_root_pass.changed   
+   - name: Update root password
+     mysql_user: name=root host={{item}} password={{mysql_new_root_pass.stdout}}
+     with_items:
+      - "{{ ansible_hostname }}"
+      - 127.0.0.1
+      - ::1
+      - localhost
+     when: mysql_new_root_pass.changed
+   - name: Create my.cnf
+     template: src=templates/mysql/mycnf.j2 dest=/root/.my.cnf
+     when: mysql_new_root_pass.changed
+...
