@@ -1,3 +1,4 @@
+---
 - hosts: ubuntu
   become: yes
   roles:
