@@ -55,4 +55,10 @@
    - name: Create Nginx config
      template: src=templates/nginx/default.j2 dest=/etc/nginx/sites-available/default 
      notify: restart Nginx
+# Wordpress
+   - name: Get Wordpress checksum
+     uri: url=https://wordpress.org/latest.zip.sha1 return_content=true
+     register: wp_checksum
+   - name: Download Wordpress
+     get_url: url=https://wordpress.org/latest.zip dest=/tmp/wordpress.zip checksum="sha1:{{wp_checksum.content}}" 
 ...
