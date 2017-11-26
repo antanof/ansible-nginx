@@ -1,0 +1,15 @@
+---
+# tasks file for ant.php
+- name: Add the ondel PHP PPA
+  apt_repository: repo='ppa:ondrej/php'
+- name: Update the apt cache
+  apt: update_cache=yes cache_valid_time=3600
+- name: Install PHP
+  apt: name={{ item }} state=installed
+  with_items:
+   - php
+   - php-fpm
+   - php-mysql
+   - php-xml
+- name: Remove Apache2
+  apt: name=apache2 state=removed

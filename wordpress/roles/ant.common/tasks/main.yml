@@ -1,0 +1,8 @@
+---
+# tasks file for ant.common
+- name: Make sure we can connect
+  ping:
+- name: Install required tools
+  apt: name={{item}} state=installed
+  with_items:
+   - unzip

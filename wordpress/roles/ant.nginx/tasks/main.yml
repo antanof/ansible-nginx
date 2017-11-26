@@ -1,0 +1,9 @@
+---
+# tasks file for ant.nginx
+- name: Install Nginx
+  apt: name=nginx state=installed
+- name: Start Nginx
+  service: name=nginx state=started
+- name: Create Nginx config
+  template: src=default.j2 dest=/etc/nginx/sites-available/default 
+  notify: restart nginx
