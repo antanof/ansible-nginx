@@ -2,9 +2,5 @@
 - hosts: ubuntu
   become: yes
   roles:
-   - ant.common
-   - ant.php
-   - ant.mysql
-   - ant.nginx
    - ant.wordpress
 ...
