@@ -1,9 +1,10 @@
+---
 - hosts: ubuntu
   become: yes
   roles:
-   - ant.common
-   - ant.php
-   - ant.mysql
-   - ant.nginx
-   - ant.wordpress
+   - role: ant.wordpress
+     database_name: wordpress
+     database_user: wordpress
+     database_password: WPP4ssw0rd
+     wp_domain: site1.org
 ...

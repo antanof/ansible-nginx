@@ -4,9 +4,9 @@ upstream php {
 
 server {
         ## Your website name goes here.
-        server_name site1.org;
+        server_name {{wp_domain}};
         ## Your only path reference.
-        root /var/www/site1.org;
+        root /var/www/{{wp_domain}};
         ## This should be in your http block and if it is, it's not needed here.
         index index.php;
 
