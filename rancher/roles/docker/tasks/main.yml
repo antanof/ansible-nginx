@@ -1,0 +1,35 @@
+---
+# tasks file for docker
+- name: Install dependances
+  apt: name={{ item }} update_cache=yes
+  with_items:
+   - python-dev
+   - python-setuptools
+
+- name: Installation pip
+  easy_install: name=pip
+
+- name: Installation docker-py
+  pip: name=docker-py state=present version=1.10.6
+
+- name: Add docker apt repo
+  apt_repository: repo='deb https://apt.dockerproject.org/repo ubuntu-{{ ansible_distribution_release }} main' state=present
+
+- name: Import the Docker repository key
+  apt_key: url=https://apt.dockerproject.org/gpg state=present id=2C52609D
+
+- name: Install Docker package
+  apt: name=docker-engine update_cache=yes
+
+- name: Creation d un groupe docker
+  group: name=docker state=present
+
+- name: Add user to docker group
+  user: name={{ item }} group=docker state=present
+  with_items: docker_users
+  when: docker_users is defined
+
+- name: Configure Docker
+  template: src=default_docker.j2 dest=/etc/default/docker mode=0644 owner=root group=root
+  notify: restart docker
+

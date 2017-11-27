@@ -1,0 +1,36 @@
+---
+# Play 1
+- name: Installation et configuration de Docker
+  hosts: all
+  sudo: yes
+  roles:
+   - { role: docker, tags: ["docker"] }
+
+# Play 2
+- name: Setting up Rancher Server
+  hosts: "rancher"
+  sudo: yes
+  roles:
+   - { role: rancher, tags: ["rancher"] }
+
+# Play 3
+- name: Register Rancher Hosts
+  hosts: "nodes"
+  sudo: yes
+  roles:
+   - { role: rancher_reg, tags: ["rancher_reg"] }
+
+# Play 4
+- name: Deploy MySQL Container
+  hosts: 'database'
+  sudo: yes
+  roles:
+   - { role: mysql_docker, tags: ["mysql_docker"] }
+
+# Play 5
+- name: Deploy WordPress App
+  hosts: "application"
+  sudo: yes
+  roles:
+   - { role: wordpress_docker, tags: ["wordpress_docker"] }
+...
