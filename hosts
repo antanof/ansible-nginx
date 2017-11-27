@@ -18,14 +18,7 @@
 # Ex 2: A collection of hosts belonging to the 'webservers' group
 
 [webservers]
-10.0.0.16
-
-[docker]
-192.168.239.148
-
-[windows]
-dc1.it.org
-hyp3.it.org
+192.168.239.175
 
 # If you have multiple hosts following a pattern you can specify
 # them like this:

@@ -1,18 +1,16 @@
 ---
-- name: Ajout du repository
+- name: ajout du repository
   apt_repository: repo={{ item }}
   with_items:
    - deb http://packages.dotdeb.org jessie all
    - deb-src http://packages.dotdeb.org jessie all
-- name: Ajout des clés de dépôt
+- name: ajout des clés de dépôt
   apt_key: url=https://www.dotdeb.org/dotdeb.gpg
-- name: apt update cache
+- name: apt update_cache
   apt: update_cache=yes
-- name: Installation php
+- name: installation php
   apt: name={{ item }} state=latest
   with_items: "{{ php_packages }}"
-- name: Suppression apache2
-  apt: name=apache2 state=removed
 
 - lineinfile: dest=/etc/php/7.0/fpm/php.ini regexp='post_max_size[\s]?=' line=`post_max_size= {{ php_post_max_size }}`
 - lineinfile: dest=/etc/php/7.0/fpm/php.ini regexp='memory_limit[\s]=' line=`memory_limit= {{ php_memory_limit }}`

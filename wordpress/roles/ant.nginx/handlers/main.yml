@@ -1,4 +1,0 @@
----
-# handlers file for ant.nginx
-- name: restart nginx
-  service: name=nginx state=restarted
